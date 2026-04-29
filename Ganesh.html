@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Final Mission 🎮</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission 🎬</title>
 
 <style>
 body{
@@ -12,7 +13,7 @@ body{
     color:white;
 }
 
-/* SCREENS */
+/* Screens */
 .screen{
     display:none;
     width:100vw;
@@ -21,82 +22,100 @@ body{
     align-items:center;
     flex-direction:column;
 }
-.active{display:flex;}
+.active{display:flex}
 
 /* SELECT */
 #select{
-    background:#0d0d0d;
+    background:#0f0f0f;
 }
-
 .guns{
     display:flex;
     flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
+    gap:15px;
 }
-
 .gun{
-    width:120px;
+    padding:10px 15px;
+    border:1px solid #333;
+    border-radius:8px;
     cursor:pointer;
-    text-align:center;
-}
-.gun img{
-    width:100%;
-    border-radius:10px;
 }
 
 /* GAME */
 #game{
-    background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') no-repeat center/cover;
     position:relative;
+    width:100vw;
+    height:100vh;
+    background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') no-repeat center/cover;
 }
 
-/* TARGET */
+/* Target */
 #target{
     position:absolute;
-    top:50%;
-    left:70%;
-    width:100px;
-    height:100px;
+    top:45%;
+    left:65%;
+    width:110px;
+    height:110px;
     border-radius:50%;
     background:radial-gradient(circle,red 20%,white 20%,white 40%,red 40%);
+    box-shadow:0 0 20px red;
 }
 
-/* SCOPE */
+/* Scope */
 #scope{
     position:absolute;
-    width:70px;
-    height:70px;
+    width:80px;
+    height:80px;
     border:2px solid white;
     border-radius:50%;
     transform:translate(-50%,-50%);
     pointer-events:none;
-    z-index:5;
 }
-
-/* 🔥 SHOOT BUTTON FIXED */
-#shootBtn{
+#scope::before,#scope::after{
+    content:"";
     position:absolute;
-    bottom:40px;
-    right:40px;
-    width:90px;
-    height:90px;
-    background:rgba(255,0,0,0.8);
+    background:white;
+}
+#scope::before{width:2px;height:100%;left:50%}
+#scope::after{height:2px;width:100%;top:50%}
+
+/* FIRE BUTTON */
+#fireBtn{
+    position:fixed;
+    bottom:35px;
+    right:35px;
+    width:110px;
+    height:110px;
     border-radius:50%;
-    display:flex;
+    background:rgba(255,255,255,0.1);
+    border:3px solid white;
+    display:none;
     justify-content:center;
     align-items:center;
-    font-size:22px;
+    font-size:35px;
     z-index:999;
-    box-shadow:0 0 20px red;
-    border:2px solid white;
-    cursor:pointer;
-    text-align:center;
+}
+
+/* FLASH EFFECT */
+#flash{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:white;
+    opacity:0;
+    pointer-events:none;
+    transition:0.2s;
 }
 
 /* FINAL */
 #final{
+    display:none;
+    position:absolute;
+    width:100%;
+    height:100%;
     background:black;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     opacity:0;
     transition:1s;
 }
@@ -106,75 +125,38 @@ body{
     width:90%;
     overflow:hidden;
 }
-
 #slider{
     display:flex;
     transition:1s;
 }
-
 .slide{
     min-width:100%;
     text-align:center;
 }
-
 .slide img{
     width:250px;
     height:250px;
-    object-fit:cover;
     border-radius:15px;
 }
 
-#caption{
-    margin-top:10px;
-    color:#ccc;
-}
-
-#message{
-    margin-top:20px;
-    font-size:18px;
-    text-align:center;
-}
+/* Caption + message */
+#caption{margin-top:10px;color:#ccc}
+#message{margin-top:20px;text-align:center}
 </style>
 </head>
 
 <body>
 
-<!-- GUN SELECT -->
+<!-- SELECT -->
 <div id="select" class="screen active">
-<h1>🔫 Choose Your Weapon</h1>
-
+<h2>🔫 Choose Weapon</h2>
 <div class="guns">
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/5b6pG7R.png">
-<p>MP40</p>
-</div>
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/2z6XG5K.png">
-<p>AK47</p>
-</div>
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/V9w7p6C.png">
-<p>P90</p>
-</div>
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/VKQx3Xe.png">
-<p>UMP</p>
-</div>
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/9t6Z3VZ.png">
-<p>AUG</p>
-</div>
-
-<div class="gun" onclick="startGame()">
-<img src="https://i.imgur.com/jK3X9Qk.png">
-<p>Thompson</p>
-</div>
-
+<div class="gun" onclick="startGame()">MP40</div>
+<div class="gun" onclick="startGame()">AK47</div>
+<div class="gun" onclick="startGame()">P90</div>
+<div class="gun" onclick="startGame()">UMP</div>
+<div class="gun" onclick="startGame()">AUG</div>
+<div class="gun" onclick="startGame()">THOMPSON</div>
 </div>
 </div>
 
@@ -182,11 +164,11 @@ body{
 <div id="game" class="screen">
 <div id="target"></div>
 <div id="scope"></div>
-
-<!-- 🔥 SHOOT BUTTON -->
-<div id="shootBtn">🔥<br>FIRE</div>
-
+<div id="flash"></div>
 </div>
+
+<!-- FIRE -->
+<div id="fireBtn">🔥</div>
 
 <!-- FINAL -->
 <div id="final" class="screen">
@@ -195,23 +177,9 @@ body{
 
 <div id="sliderContainer">
 <div id="slider">
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-</div>
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-</div>
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308">
-</div>
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
-</div>
-
+<div class="slide"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308"></div>
 </div>
 </div>
 
@@ -221,14 +189,18 @@ body{
 </div>
 
 <script>
-let shot=false;
 let scope=document.getElementById("scope");
 let target=document.getElementById("target");
+let fireBtn=document.getElementById("fireBtn");
+let flash=document.getElementById("flash");
+
+let shot=false;
 
 /* START GAME */
 function startGame(){
     select.classList.remove("active");
     game.classList.add("active");
+    fireBtn.style.display="flex";
 }
 
 /* AIM */
@@ -238,11 +210,15 @@ document.addEventListener("mousemove",e=>{
 });
 
 /* SHOOT */
-document.getElementById("shootBtn").onclick=()=>{
-
+fireBtn.onclick=()=>{
 if(shot) return;
 shot=true;
 
+/* flash */
+flash.style.opacity=0.8;
+setTimeout(()=>flash.style.opacity=0,150);
+
+/* HIT CHECK */
 let t=target.getBoundingClientRect();
 let s=scope.getBoundingClientRect();
 
@@ -254,8 +230,9 @@ let ty=t.top+t.height/2;
 
 let dist=Math.sqrt((sx-tx)**2+(sy-ty)**2);
 
-if(dist<50){
-    setTimeout(showFinal,700);
+if(dist<60){
+    target.style.background="lime";
+    setTimeout(showFinal,600);
 }else{
     alert("Miss 😅");
     location.reload();
@@ -264,23 +241,23 @@ if(dist<50){
 
 /* FINAL */
 function showFinal(){
-    game.style.display="none";
-    final.style.display="flex";
+    game.style.opacity="0";
+    fireBtn.style.display="none";
 
-    setTimeout(()=>final.style.opacity=1,50);
+    setTimeout(()=>{
+        game.style.display="none";
+        final.style.display="flex";
 
-    startSlider();
-    typeMessage();
+        setTimeout(()=>final.style.opacity=1,50);
+
+        startSlider();
+        typeMessage();
+    },600);
 }
 
 /* SLIDER */
-let index=0;
-let captions=[
-"Where it all started ❤️",
-"Our crazy moments 😂",
-"Gaming together 🎮",
-"Forever ❤️"
-];
+let i=0;
+let captions=["Start ❤️","Fun 😂","Memories 🎮"];
 
 function startSlider(){
 let slider=document.getElementById("slider");
@@ -289,15 +266,15 @@ let caption=document.getElementById("caption");
 caption.innerText=captions[0];
 
 setInterval(()=>{
-index=(index+1)%4;
-slider.style.transform=`translateX(-${index*100}%)`;
-caption.innerText=captions[index];
+i=(i+1)%3;
+slider.style.transform=`translateX(-${i*100}%)`;
+caption.innerText=captions[i];
 },2500);
 }
 
 /* TYPEWRITER */
 function typeMessage(){
-let text="You are not just my teammate… you are my best memory ❤️";
+let text="This is not just a game… this is our story ❤️";
 let i=0;
 
 let interval=setInterval(()=>{
