@@ -25,9 +25,7 @@ body{
 .active{display:flex}
 
 /* SELECT */
-#select{
-    background:#0f0f0f;
-}
+#select{background:#111}
 .guns{
     display:flex;
     flex-wrap:wrap;
@@ -45,7 +43,7 @@ body{
     position:relative;
     width:100vw;
     height:100vh;
-    background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') no-repeat center/cover;
+    background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover;
 }
 
 /* Target */
@@ -57,7 +55,6 @@ body{
     height:110px;
     border-radius:50%;
     background:radial-gradient(circle,red 20%,white 20%,white 40%,red 40%);
-    box-shadow:0 0 20px red;
 }
 
 /* Scope */
@@ -70,19 +67,12 @@ body{
     transform:translate(-50%,-50%);
     pointer-events:none;
 }
-#scope::before,#scope::after{
-    content:"";
-    position:absolute;
-    background:white;
-}
-#scope::before{width:2px;height:100%;left:50%}
-#scope::after{height:2px;width:100%;top:50%}
 
 /* FIRE BUTTON */
 #fireBtn{
     position:fixed;
-    bottom:35px;
-    right:35px;
+    bottom:30px;
+    right:30px;
     width:110px;
     height:110px;
     border-radius:50%;
@@ -91,27 +81,15 @@ body{
     display:none;
     justify-content:center;
     align-items:center;
-    font-size:35px;
+    font-size:30px;
     z-index:999;
-}
-
-/* FLASH EFFECT */
-#flash{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background:white;
-    opacity:0;
-    pointer-events:none;
-    transition:0.2s;
 }
 
 /* FINAL */
 #final{
     display:none;
-    position:absolute;
-    width:100%;
-    height:100%;
+    width:100vw;
+    height:100vh;
     background:black;
     flex-direction:column;
     align-items:center;
@@ -125,23 +103,36 @@ body{
     width:90%;
     overflow:hidden;
 }
+
 #slider{
     display:flex;
     transition:1s;
 }
+
 .slide{
     min-width:100%;
     text-align:center;
 }
+
 .slide img{
     width:250px;
     height:250px;
     border-radius:15px;
 }
 
-/* Caption + message */
-#caption{margin-top:10px;color:#ccc}
-#message{margin-top:20px;text-align:center}
+/* Caption */
+#caption{
+    margin-top:10px;
+    color:#ccc;
+    font-size:16px;
+}
+
+/* Message */
+#message{
+    margin-top:20px;
+    font-size:18px;
+    text-align:center;
+}
 </style>
 </head>
 
@@ -164,7 +155,6 @@ body{
 <div id="game" class="screen">
 <div id="target"></div>
 <div id="scope"></div>
-<div id="flash"></div>
 </div>
 
 <!-- FIRE -->
@@ -177,9 +167,19 @@ body{
 
 <div id="sliderContainer">
 <div id="slider">
-<div class="slide"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"></div>
-<div class="slide"><img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308"></div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
+</div>
+
+<div class="slide">
+<img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308">
+</div>
+
 </div>
 </div>
 
@@ -189,14 +189,20 @@ body{
 </div>
 
 <script>
+
+/* FIXED VARIABLES */
+let select=document.getElementById("select");
+let game=document.getElementById("game");
+let final=document.getElementById("final");
+
 let scope=document.getElementById("scope");
 let target=document.getElementById("target");
 let fireBtn=document.getElementById("fireBtn");
-let flash=document.getElementById("flash");
 
+/* STATE */
 let shot=false;
 
-/* START GAME */
+/* START */
 function startGame(){
     select.classList.remove("active");
     game.classList.add("active");
@@ -214,11 +220,6 @@ fireBtn.onclick=()=>{
 if(shot) return;
 shot=true;
 
-/* flash */
-flash.style.opacity=0.8;
-setTimeout(()=>flash.style.opacity=0,150);
-
-/* HIT CHECK */
 let t=target.getBoundingClientRect();
 let s=scope.getBoundingClientRect();
 
@@ -231,8 +232,7 @@ let ty=t.top+t.height/2;
 let dist=Math.sqrt((sx-tx)**2+(sy-ty)**2);
 
 if(dist<60){
-    target.style.background="lime";
-    setTimeout(showFinal,600);
+    showFinal();
 }else{
     alert("Miss 😅");
     location.reload();
@@ -241,23 +241,24 @@ if(dist<60){
 
 /* FINAL */
 function showFinal(){
-    game.style.opacity="0";
+    game.style.display="none";
     fireBtn.style.display="none";
 
-    setTimeout(()=>{
-        game.style.display="none";
-        final.style.display="flex";
+    final.style.display="flex";
 
-        setTimeout(()=>final.style.opacity=1,50);
+    setTimeout(()=>final.style.opacity=1,50);
 
-        startSlider();
-        typeMessage();
-    },600);
+    startSlider();
+    typeMessage();
 }
 
 /* SLIDER */
-let i=0;
-let captions=["Start ❤️","Fun 😂","Memories 🎮"];
+let index=0;
+let captions=[
+"Where it started ❤️",
+"Our fun moments 😂",
+"Gaming memories 🎮"
+];
 
 function startSlider(){
 let slider=document.getElementById("slider");
@@ -266,23 +267,27 @@ let caption=document.getElementById("caption");
 caption.innerText=captions[0];
 
 setInterval(()=>{
-i=(i+1)%3;
-slider.style.transform=`translateX(-${i*100}%)`;
-caption.innerText=captions[i];
+index=(index+1)%captions.length;
+slider.style.transform=`translateX(-${index*100}%)`;
+caption.innerText=captions[index];
 },2500);
 }
 
 /* TYPEWRITER */
 function typeMessage(){
-let text="This is not just a game… this is our story ❤️";
+let text="You are not just my teammate… you are my best memory ❤️";
 let i=0;
 
+let msg=document.getElementById("message"); // ✅ FIX
+msg.innerHTML="";
+
 let interval=setInterval(()=>{
-message.innerHTML+=text[i];
+msg.innerHTML+=text[i];
 i++;
 if(i>=text.length) clearInterval(interval);
 },40);
 }
+
 </script>
 
 </body>
