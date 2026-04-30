@@ -230,6 +230,7 @@ fireBtn.addEventListener("click", shoot);
 
 /* FINAL */
 function showFinal(){
+function showFinal(){
 game.style.display="none";
 fireBtn.style.display="none";
 
@@ -239,12 +240,6 @@ setTimeout(()=>final.style.opacity=1,50);
 
 startSlider();
 typeMessage();
-
-/* ⭐ auto scroll to message */
-setTimeout(()=>{
-document.getElementById("messageSection")
-.scrollIntoView({ behavior: "smooth" });
-}, 3000);
 }
 /* SLIDER */
 let index=0;
@@ -310,7 +305,7 @@ let interval = setInterval(()=>{
 msg.innerHTML += text[i];
 
 /* ⭐ THIS IS THE CORRECT PLACE */
-msg.scrollTop = msg.scrollHeight;
+
 
 i++;
 if(i >= text.length) clearInterval(interval);
