@@ -13,18 +13,7 @@ background:black;
 color:white;
 }
 
-/* screens */
-.screen{
-display:none;
-width:100vw;
-height:100vh;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-}
-.active{display:flex}
-
-/* game */
+/* GAME */
 #game{
 position:relative;
 width:100vw;
@@ -37,39 +26,40 @@ background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') c
 position:absolute;
 top:40%;
 left:60%;
-width:150px;
-height:150px;
+width:180px;
+height:180px;
 background:url('https://cdn-icons-png.flaticon.com/512/616/616494.png') center/contain no-repeat;
 }
 
-/* scope */
+/* BIGGER SCOPE */
 #scope{
 position:absolute;
-width:80px;
-height:80px;
-border:2px solid white;
+width:140px;
+height:140px;
+border:3px solid white;
 border-radius:50%;
 transform:translate(-50%,-50%);
 pointer-events:none;
 }
 
-/* fire button */
+/* FIRE BUTTON */
 #fireBtn{
 position:fixed;
 bottom:30px;
 right:30px;
-width:110px;
-height:110px;
+width:120px;
+height:120px;
 border-radius:50%;
 background:rgba(255,255,255,0.1);
 border:3px solid white;
 display:flex;
 justify-content:center;
 align-items:center;
-font-size:30px;
+font-size:35px;
+z-index:999;
 }
 
-/* flash */
+/* FLASH */
 #flash{
 position:absolute;
 width:100%;
@@ -79,7 +69,7 @@ opacity:0;
 transition:0.2s;
 }
 
-/* final */
+/* FINAL */
 #final{
 display:none;
 width:100vw;
@@ -92,7 +82,7 @@ opacity:0;
 transition:1s;
 }
 
-/* slider */
+/* SLIDER */
 #slider{
 display:flex;
 transition:1s;
@@ -114,8 +104,7 @@ border-radius:15px;
 
 <body>
 
-<!-- GAME -->
-<div id="game" class="screen active">
+<div id="game">
 <div id="monster"></div>
 <div id="scope"></div>
 <div id="flash"></div>
@@ -123,8 +112,7 @@ border-radius:15px;
 
 <div id="fireBtn">🔥</div>
 
-<!-- FINAL -->
-<div id="final" class="screen">
+<div id="final">
 
 <h1>💥 Perfect Shot 💥</h1>
 
@@ -141,50 +129,60 @@ border-radius:15px;
 
 <script>
 
-let scope=document.getElementById("scope");
-let monster=document.getElementById("monster");
-let fireBtn=document.getElementById("fireBtn");
-let flash=document.getElementById("flash");
+let scope = document.getElementById("scope");
+let monster = document.getElementById("monster");
+let fireBtn = document.getElementById("fireBtn");
+let flash = document.getElementById("flash");
+let game = document.getElementById("game");
+let final = document.getElementById("final");
 
-/* AIM */
-document.addEventListener("mousemove",e=>{
-scope.style.left=e.clientX+"px";
-scope.style.top=e.clientY+"px";
+/* AIM (mouse + touch) */
+document.addEventListener("mousemove", e => {
+scope.style.left = e.clientX + "px";
+scope.style.top = e.clientY + "px";
 });
 
-/* SHOOT */
-fireBtn.onclick=()=>{
+document.addEventListener("touchmove", e => {
+let t = e.touches[0];
+scope.style.left = t.clientX + "px";
+scope.style.top = t.clientY + "px";
+});
 
-/* flash */
-flash.style.opacity=0.8;
+/* SHOOT FUNCTION */
+function shoot(){
+
+/* flash effect */
+flash.style.opacity = 0.8;
 setTimeout(()=>flash.style.opacity=0,100);
 
-/* bounding box hit detection */
-let m=monster.getBoundingClientRect();
-let s=scope.getBoundingClientRect();
+/* bounding overlap detection */
+let m = monster.getBoundingClientRect();
+let s = scope.getBoundingClientRect();
 
-let sx=s.left+s.width/2;
-let sy=s.top+s.height/2;
+/* check overlap */
+let hit = !(
+s.right < m.left ||
+s.left > m.right ||
+s.bottom < m.top ||
+s.top > m.bottom
+);
 
-/* check if scope center is inside monster box */
-if(
-sx >= m.left &&
-sx <= m.right &&
-sy >= m.top &&
-sy <= m.bottom
-){
+if(hit){
 showFinal();
 }else{
 alert("Miss 😅 Try again");
 location.reload();
 }
+}
 
-};
+/* CLICK + TOUCH */
+fireBtn.addEventListener("click", shoot);
+fireBtn.addEventListener("touchstart", shoot);
 
 /* FINAL */
 function showFinal(){
-game.style.opacity="0";
-fireBtn.style.display="none";
+game.style.opacity = "0";
+fireBtn.style.display = "none";
 
 setTimeout(()=>{
 game.style.display="none";
@@ -218,7 +216,7 @@ caption.innerText=captions[index];
 },2500);
 }
 
-/* TEXT */
+/* TYPEWRITER */
 function typeMessage(){
 let text="You always hit the target… just like you hit my life ❤️";
 let i=0;
