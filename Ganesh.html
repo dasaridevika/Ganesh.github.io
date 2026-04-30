@@ -105,13 +105,22 @@ margin-top:20px;
 text-align:center;
 padding:20px;
 max-width:90%;
-font-size:14px;
+max-height:200px;      /* scroll area height */
+overflow-y:auto;       /* enable scroll */
 line-height:1.5;
-overflow:hidden;  
+
+
+/* 🔥 hide scrollbar */
+scrollbar-width: none;        /* Firefox */
+-ms-overflow-style: none;     /* IE/Edge */
 }
-  #final{
-overflow:hidden;   /* prevents any scroll */
-  }
+
+#message::-webkit-scrollbar {
+display: none;                /* Chrome/Safari */
+}
+#message{
+scroll-behavior: smooth;
+}
 </style>
 </head>
 
@@ -218,7 +227,12 @@ let index=0;
 let captions=[
 "Where it started as 2-1 CRs❤️",
 "Our fun moments 😂",
-"Gaming memories 🎮"
+"Gaming memories 🎮",
+"College ends..Friendship doesn't",
+"Shades on,memories loaded",
+"Suited up,showed up,Graduated",
+"From unknown to known"
+
 ];
 
 function startSlider(){
@@ -266,8 +280,8 @@ Wish u good luck for your future.Stay healthy.Take care...`;
 
 let i=0;
 let msg=document.getElementById("message");
-msg.innerHTML="";
-
+msg.innerHTML += text[i];
+msg.scrollTop = msg.scrollHeight;
 let interval=setInterval(()=>{
 msg.innerHTML+=text[i];
 i++;
