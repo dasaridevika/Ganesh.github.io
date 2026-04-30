@@ -5,14 +5,13 @@
 <title>Monster Shot 🎮</title>
 
 <style>
-body{
+  body{
 margin:0;
-overflow:hidden;
 font-family:Arial;
 background:black;
 color:white;
-}
-
+overflow-y:auto;   /* ⭐ allow scrolling */
+  }
 /* GAME */
 #game{
 position:relative;
@@ -69,21 +68,38 @@ background:white;
 opacity:0;
 transition:0.2s;
 }
-
-/* FINAL */
 #final{
 display:none;
-width:100vw;
+flex-direction:column;
+width:100%;
+}
+
+/* TOP SECTION */
+#slideSection{
 height:100vh;
-background:black;
+display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-opacity:0;
-transition:1s;
-overflow:hidden;
 }
 
+/* MESSAGE SECTION */
+#messageSection{
+padding:30px 20px;
+background:#111;
+min-height:100vh;
+}
+
+/* REMOVE scroll limit */
+#message{
+max-height:none;
+overflow:visible;
+}
+/* FINAL */
+
+html{
+scroll-behavior:smooth;
+}
 /* SLIDER */
 #slider{
 display:flex;
@@ -135,21 +151,29 @@ scroll-behavior: smooth;
 <div id="fireBtn">🔥</div>
 
 <div id="final">
-<h1>💥 Perfect Shot 💥</h1>
 
-<!-- ✅ FIXED: slider wrapper added -->
-<div id="slider">
-  <div class="slide"><img src="1000174147.jpg"></div>
-  <div class="slide"><img src="1000174170.jpg"></div>
-  <div class="slide"><img src="IMG-20260429-WA0034.jpg"></div>
-  <div class="slide"><img src="IMG_20260325_231408.jpg"></div>
-  <div class="slide"><img src="IMG_20260427_205008.jpg"></div>
-  <div class="slide"><img src="IMG_20260427_205222.jpg"></div>
-  <div class="slide"><img src="1000174147.jpg"></div>
-</div>
+  <!-- 🖼 SLIDESHOW SECTION -->
+  <div id="slideSection">
+    <h1>💥 Perfect Shot 💥</h1>
 
-<div id="caption"></div>
-<p id="message"></p>
+    <div id="slider">
+      <div class="slide"><img src="1000174147.jpg"></div>
+      <div class="slide"><img src="1000174170.jpg"></div>
+      <div class="slide"><img src="IMG-20260429-WA0034.jpg"></div>
+      <div class="slide"><img src="IMG_20260325_231408.jpg"></div>
+      <div class="slide"><img src="IMG_20260427_205008.jpg"></div>
+      <div class="slide"><img src="IMG_20260427_205222.jpg"></div>
+      <div class="slide"><img src="1000174147.jpg"></div>
+    </div>
+
+    <div id="caption"></div>
+  </div>
+
+  <!-- 📜 MESSAGE SECTION -->
+  <div id="messageSection">
+    <p id="message"></p>
+  </div>
+
 </div>
 
 <script>
