@@ -234,12 +234,18 @@ game.style.display="none";
 fireBtn.style.display="none";
 
 final.style.display="flex";
+
 setTimeout(()=>final.style.opacity=1,50);
 
 startSlider();
 typeMessage();
-}
 
+/* ⭐ auto scroll to message */
+setTimeout(()=>{
+document.getElementById("messageSection")
+.scrollIntoView({ behavior: "smooth" });
+}, 3000);
+}
 /* SLIDER */
 let index=0;
 let captions=[
