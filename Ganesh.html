@@ -10,7 +10,7 @@ margin:0;
 font-family:Arial;
 background:black;
 color:white;
-overflow-y:auto;   /* allow full page scroll */
+overflow-y:hidden;   /* allow full page scroll */
 }
 
 /* GAME */
@@ -188,7 +188,7 @@ scope.style.top = (e.clientY - 70) + "px";
 });
 
 /* 📱 TOUCH AIM (FIXED) */
-document.addEventListener("touchmove", e => {
+game.addEventListener("touchmove", e => {
 e.preventDefault();
 
 let t = e.touches[0];
@@ -197,7 +197,13 @@ scope.style.top = (t.clientY - 70) + "px";
 
 }, { passive: false });
 
-document.addEventListener("touchstart", e => {
+let t = e.touches[0];
+scope.style.left = (t.clientX - 70) + "px";
+scope.style.top = (t.clientY - 70) + "px";
+
+}, { passive: false });
+
+game.addEventListener("touchstart", e => {
 let t = e.touches[0];
 scope.style.left = (t.clientX - 70) + "px";
 scope.style.top = (t.clientY - 70) + "px";
@@ -232,11 +238,13 @@ fireBtn.addEventListener("click", shoot);
 
 /* FINAL */
 function showFinal(){
-function showFinal(){
 game.style.display="none";
 fireBtn.style.display="none";
 
 final.style.display="flex";
+
+/* ⭐ ENABLE SCROLL AFTER GAME */
+document.body.style.overflow = "auto";
 
 setTimeout(()=>final.style.opacity=1,50);
 
