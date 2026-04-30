@@ -39,6 +39,8 @@ height:140px;
 border:3px solid white;
 border-radius:50%;
 pointer-events:none;
+z-index:10;
+transition:0.05s linear;
 }
 
 /* FIRE BUTTON */
@@ -106,22 +108,25 @@ border-radius:15px;
 <body>
 
 <div id="game">
-<div id="monster"></div>
-<div id="scope"></div>
-<div id="flash"></div>
+  <div id="monster"></div>
+  <div id="scope"></div>
+  <div id="flash"></div>
 </div>
 
 <div id="fireBtn">🔥</div>
 
 <div id="final">
 <h1>💥 Perfect Shot 💥</h1>
-<div class="slide"><img src="1000174147.jpg"></div>
-<div class="slide"><img src="1000174170.jpg"></div>
-<div class="slide"><img src="IMG-20260429-WA0034.jpg"></div>
-<div class="slide"><img src="IMG_20260325_231408.jpg"></div>
-<div class="slide"><img src="IMG_20260427_205008.jpg"></div>
-<div class="slide"><img src="IMG_20260427_205222.jpg"></div>
-<div class="slide"><img src="1000174147.jpg"></div>
+
+<!-- ✅ FIXED: slider wrapper added -->
+<div id="slider">
+  <div class="slide"><img src="1000174147.jpg"></div>
+  <div class="slide"><img src="1000174170.jpg"></div>
+  <div class="slide"><img src="IMG-20260429-WA0034.jpg"></div>
+  <div class="slide"><img src="IMG_20260325_231408.jpg"></div>
+  <div class="slide"><img src="IMG_20260427_205008.jpg"></div>
+  <div class="slide"><img src="IMG_20260427_205222.jpg"></div>
+  <div class="slide"><img src="1000174147.jpg"></div>
 </div>
 
 <div id="caption"></div>
@@ -137,19 +142,29 @@ let flash = document.getElementById("flash");
 let game = document.getElementById("game");
 let final = document.getElementById("final");
 
-/* AIM FIX (center properly) */
+/* 🎯 MOUSE AIM */
 document.addEventListener("mousemove", e => {
 scope.style.left = (e.clientX - 70) + "px";
 scope.style.top = (e.clientY - 70) + "px";
 });
 
+/* 📱 TOUCH AIM (FIXED) */
 document.addEventListener("touchmove", e => {
+e.preventDefault();
+
+let t = e.touches[0];
+scope.style.left = (t.clientX - 70) + "px";
+scope.style.top = (t.clientY - 70) + "px";
+
+}, { passive: false });
+
+document.addEventListener("touchstart", e => {
 let t = e.touches[0];
 scope.style.left = (t.clientX - 70) + "px";
 scope.style.top = (t.clientY - 70) + "px";
 });
 
-/* SHOOT */
+/* 🔫 SHOOT */
 function shoot(){
 
 flash.style.opacity = 0.8;
@@ -173,7 +188,7 @@ alert("Miss 😅 Try again");
 }
 }
 
-/* ONLY CLICK (fix double fire bug) */
+/* FIRE */
 fireBtn.addEventListener("click", shoot);
 
 /* FINAL */
@@ -211,7 +226,9 @@ caption.innerText=captions[index];
 
 /* TYPEWRITER */
 function typeMessage(){
-let text="Hello Pentayya...\n\nYou became one of the best friends I got ❤️.
+let text=`Hello Pentayya...
+
+You became one of the best friends I got ❤️.
   
   You know what at the beginning i thought abt u was a proud person.
 Mana friendship start aindi ante CRs ainappude.
@@ -234,9 +251,9 @@ So finally Mr.Pentayya #topper #Freefire Partner #Captain
 
 From unknown to Unforgettable.Thankyou for being my friend.U will remain as my real friend forever..
   
-Wish u good luck for your future.Stay healthy.Take care...";
-let i=0;
+Wish u good luck for your future.Stay healthy.Take care...`;
 
+let i=0;
 let msg=document.getElementById("message");
 msg.innerHTML="";
 
@@ -246,11 +263,13 @@ i++;
 if(i>=text.length) clearInterval(interval);
 },40);
 }
-/* BONUS: MONSTER MOVEMENT */
+
+/* MONSTER MOVEMENT */
 setInterval(()=>{
 monster.style.top = Math.random()*70 + "%";
 monster.style.left = Math.random()*70 + "%";
 },2000);
+
 </script>
 
 </body>
