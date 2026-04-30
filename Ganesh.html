@@ -115,7 +115,6 @@ border-radius:15px;
 
 <div id="final">
 <h1>💥 Perfect Shot 💥</h1>
-
 <div class="slide"><img src="1000174147.jpg"></div>
 <div class="slide"><img src="1000174170.jpg"></div>
 <div class="slide"><img src="IMG-20260429-WA0034.jpg"></div>
@@ -247,7 +246,11 @@ i++;
 if(i>=text.length) clearInterval(interval);
 },40);
 }
-
+/* BONUS: MONSTER MOVEMENT */
+setInterval(()=>{
+monster.style.top = Math.random()*70 + "%";
+monster.style.left = Math.random()*70 + "%";
+},2000);
 </script>
 
 </body>
