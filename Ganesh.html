@@ -31,14 +31,13 @@ height:180px;
 background:url('https://cdn-icons-png.flaticon.com/512/616/616494.png') center/contain no-repeat;
 }
 
-/* BIGGER SCOPE */
+/* SCOPE */
 #scope{
 position:absolute;
 width:140px;
 height:140px;
 border:3px solid white;
 border-radius:50%;
-transform:translate(-50%,-50%);
 pointer-events:none;
 }
 
@@ -80,11 +79,13 @@ align-items:center;
 justify-content:center;
 opacity:0;
 transition:1s;
+overflow:hidden;
 }
 
 /* SLIDER */
 #slider{
 display:flex;
+width:100%;
 transition:1s;
 }
 .slide{
@@ -98,7 +99,7 @@ border-radius:15px;
 }
 
 #caption{margin-top:10px;color:#ccc}
-#message{margin-top:20px;text-align:center}
+#message{margin-top:20px;text-align:center;padding:20px}
 </style>
 </head>
 
@@ -113,7 +114,6 @@ border-radius:15px;
 <div id="fireBtn">🔥</div>
 
 <div id="final">
-
 <h1>💥 Perfect Shot 💥</h1>
 
 <div class="slide"><img src="1000174147.jpg"></div>
@@ -127,7 +127,6 @@ border-radius:15px;
 
 <div id="caption"></div>
 <p id="message"></p>
-
 </div>
 
 <script>
@@ -139,30 +138,28 @@ let flash = document.getElementById("flash");
 let game = document.getElementById("game");
 let final = document.getElementById("final");
 
-/* AIM (mouse + touch) */
+/* AIM FIX (center properly) */
 document.addEventListener("mousemove", e => {
-scope.style.left = e.clientX + "px";
-scope.style.top = e.clientY + "px";
+scope.style.left = (e.clientX - 70) + "px";
+scope.style.top = (e.clientY - 70) + "px";
 });
 
 document.addEventListener("touchmove", e => {
 let t = e.touches[0];
-scope.style.left = t.clientX + "px";
-scope.style.top = t.clientY + "px";
+scope.style.left = (t.clientX - 70) + "px";
+scope.style.top = (t.clientY - 70) + "px";
 });
 
-/* SHOOT FUNCTION */
+/* SHOOT */
 function shoot(){
 
-/* flash effect */
 flash.style.opacity = 0.8;
 setTimeout(()=>flash.style.opacity=0,100);
 
-/* bounding overlap detection */
 let m = monster.getBoundingClientRect();
 let s = scope.getBoundingClientRect();
 
-/* check overlap */
+/* COLLISION */
 let hit = !(
 s.right < m.left ||
 s.left > m.right ||
@@ -174,34 +171,28 @@ if(hit){
 showFinal();
 }else{
 alert("Miss 😅 Try again");
-location.reload();
 }
 }
 
-/* CLICK + TOUCH */
+/* ONLY CLICK (fix double fire bug) */
 fireBtn.addEventListener("click", shoot);
-fireBtn.addEventListener("touchstart", shoot);
 
 /* FINAL */
 function showFinal(){
-game.style.opacity = "0";
-fireBtn.style.display = "none";
-
-setTimeout(()=>{
 game.style.display="none";
-final.style.display="flex";
+fireBtn.style.display="none";
 
+final.style.display="flex";
 setTimeout(()=>final.style.opacity=1,50);
 
 startSlider();
 typeMessage();
-},500);
 }
 
 /* SLIDER */
 let index=0;
 let captions=[
-"Where it started ❤️",
+"Where it started as 2-1 CRs❤️",
 "Our fun moments 😂",
 "Gaming memories 🎮"
 ];
@@ -221,29 +212,7 @@ caption.innerText=captions[index];
 
 /* TYPEWRITER */
 function typeMessage(){
-let text="Hello Pentayya...
-  
-You know what at the beginning i thought abt u was a proud person.
-Mana friendship start aindi ante CRs ainappude.
-Appud kopamochchedi m pattinchukokpothunde nake work ala ani.
-But tharvatha matladekoddi oka manchi opinion form aindi.
-Mirante topper ankondi...Manchiga chadutharu but chill kuda bane kodtharu.
-My freefire tutor.Btech ainaka marchipotharemo ikkada inko player undi ani marchipokandi.
-Chadvalsina days kuda aipoyay..ee tineki ee chapter start cheddam ane days aipoyay..Chatgpt links,notes send cheyalsina days aipoyay.
-
-Mitho chadvinappud ela untunde ante i had to finish before u ala inka chadvalanna zeal untunde.Competition kakpoina a desire to finish soon.
-I like the way u talk like u talk respectfully.
-
-Asal miru normal ga matladutharo ledo ankunna starting lo but ippud nanne tease chesthunnaru.
-
-Aina mi fav Dk sir mimmalni miss avtharemo😂.And munde Vp sir fav student.
-
-In future if u need any help ask me ante mik help chesentha peddollam kakpoina ma chethlo unte chestham.
-
-So finally Mr.Pentayya #topper #Freefire Partner #Captain
-
-Thankyou for being my friend.U will remain as my real friend forever..
-  ";
+let text="Hello Pentayya...\n\nYou became one of the best friends I got ❤️";
 let i=0;
 
 let msg=document.getElementById("message");
