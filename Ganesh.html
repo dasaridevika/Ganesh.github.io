@@ -5,13 +5,14 @@
 <title>Monster Shot 🎮</title>
 
 <style>
-  body{
+body{
 margin:0;
 font-family:Arial;
 background:black;
 color:white;
-overflow-y:auto;   /* ⭐ allow scrolling */
-  }
+overflow-y:auto;   /* allow full page scroll */
+}
+
 /* GAME */
 #game{
 position:relative;
@@ -68,13 +69,15 @@ background:white;
 opacity:0;
 transition:0.2s;
 }
+
+/* FINAL PAGE */
 #final{
 display:none;
 flex-direction:column;
 width:100%;
 }
 
-/* TOP SECTION */
+/* TOP SLIDESHOW SECTION */
 #slideSection{
 height:100vh;
 display:flex;
@@ -83,59 +86,50 @@ align-items:center;
 justify-content:center;
 }
 
-/* MESSAGE SECTION */
-#messageSection{
-padding:30px 20px;
-background:#111;
-min-height:100vh;
-}
-
-/* REMOVE scroll limit */
-#message{
-max-height:none;
-overflow:visible;
-}
-/* FINAL */
-
-html{
-scroll-behavior:smooth;
-}
 /* SLIDER */
 #slider{
 display:flex;
 width:100%;
 transition:1s;
 }
+
 .slide{
 min-width:100%;
 text-align:center;
 }
+
 .slide img{
 max-width:90%;
 max-height:60vh;
-object-fit:contain;  /* ⭐ keeps full image */
+object-fit:contain;  /* show full image without cropping */
 border-radius:15px;
 }
+
+/* MESSAGE SECTION */
+#messageSection{
+padding:40px 20px;
+background:#111;
+min-height:100vh;
+display:flex;
+justify-content:center;
+}
+
+/* MESSAGE TEXT */
 #message{
 margin-top:20px;
 text-align:center;
 padding:20px;
-max-width:90%;
-max-height:200px;      /* scroll area height */
-overflow-y:auto;       /* enable scroll */
-line-height:1.5;
+max-width:800px;
+line-height:1.6;
 
-
-/* 🔥 hide scrollbar */
-scrollbar-width: none;        /* Firefox */
--ms-overflow-style: none;     /* IE/Edge */
+/* IMPORTANT: full page scroll */
+max-height:none;
+overflow:visible;
 }
 
-#message::-webkit-scrollbar {
-display: none;                /* Chrome/Safari */
-}
-#message{
-scroll-behavior: smooth;
+/* SMOOTH SCROLL */
+html{
+scroll-behavior:smooth;
 }
 </style>
 </head>
