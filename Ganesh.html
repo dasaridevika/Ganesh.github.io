@@ -251,7 +251,7 @@ caption.innerText=captions[index];
 
 /* TYPEWRITER */
 function typeMessage(){
-let text=`Hello Pentayya...
+let text = `Hello Pentayya...
 
 You became one of the best friends I got ❤️.
   
@@ -278,15 +278,20 @@ From unknown to Unforgettable.Thankyou for being my friend.U will remain as my r
   
 Wish u good luck for your future.Stay healthy.Take care...`;
 
-let i=0;
-let msg=document.getElementById("message");
+let i = 0;
+let msg = document.getElementById("message");
+msg.innerHTML = "";  // reset
+
+let interval = setInterval(()=>{
 msg.innerHTML += text[i];
+
+/* ⭐ THIS IS THE CORRECT PLACE */
 msg.scrollTop = msg.scrollHeight;
-let interval=setInterval(()=>{
-msg.innerHTML+=text[i];
+
 i++;
-if(i>=text.length) clearInterval(interval);
-},40);
+if(i >= text.length) clearInterval(interval);
+
+}, 40);
 }
 
 /* MONSTER MOVEMENT */
