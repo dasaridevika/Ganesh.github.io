@@ -2,162 +2,125 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mission 🎬</title>
+<title>Monster Shot 🎮</title>
 
 <style>
 body{
-    margin:0;
-    overflow:hidden;
-    font-family:Arial;
-    background:black;
-    color:white;
+margin:0;
+overflow:hidden;
+font-family:Arial;
+background:black;
+color:white;
 }
 
-/* Screens */
+/* screens */
 .screen{
-    display:none;
-    width:100vw;
-    height:100vh;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
+display:none;
+width:100vw;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 }
 .active{display:flex}
 
-/* SELECT */
-#select{background:#111}
-.guns{
-    display:flex;
-    flex-wrap:wrap;
-    gap:15px;
-}
-.gun{
-    padding:10px 15px;
-    border:1px solid #333;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-/* GAME */
+/* game */
 #game{
-    position:relative;
-    width:100vw;
-    height:100vh;
-    background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover;
+position:relative;
+width:100vw;
+height:100vh;
+background:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee') center/cover;
 }
 
-/* Target */
-#target{
-    position:absolute;
-    top:45%;
-    left:65%;
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    background:radial-gradient(circle,red 20%,white 20%,white 40%,red 40%);
+/* MONSTER */
+#monster{
+position:absolute;
+top:40%;
+left:60%;
+width:150px;
+height:150px;
+background:url('https://cdn-icons-png.flaticon.com/512/616/616494.png') center/contain no-repeat;
 }
 
-/* Scope */
+/* scope */
 #scope{
-    position:absolute;
-    width:80px;
-    height:80px;
-    border:2px solid white;
-    border-radius:50%;
-    transform:translate(-50%,-50%);
-    pointer-events:none;
+position:absolute;
+width:80px;
+height:80px;
+border:2px solid white;
+border-radius:50%;
+transform:translate(-50%,-50%);
+pointer-events:none;
 }
 
-/* FIRE BUTTON */
+/* fire button */
 #fireBtn{
-    position:fixed;
-    bottom:30px;
-    right:30px;
-    width:110px;
-    height:110px;
-    border-radius:50%;
-    background:rgba(255,255,255,0.1);
-    border:3px solid white;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-    z-index:999;
+position:fixed;
+bottom:30px;
+right:30px;
+width:110px;
+height:110px;
+border-radius:50%;
+background:rgba(255,255,255,0.1);
+border:3px solid white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
 }
 
-/* FINAL */
+/* flash */
+#flash{
+position:absolute;
+width:100%;
+height:100%;
+background:white;
+opacity:0;
+transition:0.2s;
+}
+
+/* final */
 #final{
-    display:none;
-    width:100vw;
-    height:100vh;
-    background:black;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    transition:1s;
+display:none;
+width:100vw;
+height:100vh;
+background:black;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+opacity:0;
+transition:1s;
 }
 
-/* SLIDER */
-#sliderContainer{
-    width:90%;
-    overflow:hidden;
-}
-
+/* slider */
 #slider{
-    display:flex;
-    transition:1s;
+display:flex;
+transition:1s;
 }
-
 .slide{
-    min-width:100%;
-    text-align:center;
+min-width:100%;
+text-align:center;
 }
-
 .slide img{
-    width:250px;
-    height:250px;
-    border-radius:15px;
+width:250px;
+height:250px;
+border-radius:15px;
 }
 
-/* Caption */
-#caption{
-    margin-top:10px;
-    color:#ccc;
-    font-size:16px;
-}
-
-/* Message */
-#message{
-    margin-top:20px;
-    font-size:18px;
-    text-align:center;
-}
+#caption{margin-top:10px;color:#ccc}
+#message{margin-top:20px;text-align:center}
 </style>
 </head>
 
 <body>
 
-<!-- SELECT -->
-<div id="select" class="screen active">
-<h2>🔫 Choose Weapon</h2>
-<div class="guns">
-<div class="gun" onclick="startGame()">MP40</div>
-<div class="gun" onclick="startGame()">AK47</div>
-<div class="gun" onclick="startGame()">P90</div>
-<div class="gun" onclick="startGame()">UMP</div>
-<div class="gun" onclick="startGame()">AUG</div>
-<div class="gun" onclick="startGame()">THOMPSON</div>
-</div>
-</div>
-
 <!-- GAME -->
-<div id="game" class="screen">
-<div id="target"></div>
+<div id="game" class="screen active">
+<div id="monster"></div>
 <div id="scope"></div>
+<div id="flash"></div>
 </div>
 
-<!-- FIRE -->
 <div id="fireBtn">🔥</div>
 
 <!-- FINAL -->
@@ -165,22 +128,10 @@ body{
 
 <h1>💥 Perfect Shot 💥</h1>
 
-<div id="sliderContainer">
 <div id="slider">
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-</div>
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-</div>
-
-<div class="slide">
-<img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308">
-</div>
-
-</div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"></div>
+<div class="slide"><img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308"></div>
 </div>
 
 <div id="caption"></div>
@@ -190,66 +141,60 @@ body{
 
 <script>
 
-/* FIXED VARIABLES */
-let select=document.getElementById("select");
-let game=document.getElementById("game");
-let final=document.getElementById("final");
-
 let scope=document.getElementById("scope");
-let target=document.getElementById("target");
+let monster=document.getElementById("monster");
 let fireBtn=document.getElementById("fireBtn");
-
-/* STATE */
-let shot=false;
-
-/* START */
-function startGame(){
-    select.classList.remove("active");
-    game.classList.add("active");
-    fireBtn.style.display="flex";
-}
+let flash=document.getElementById("flash");
 
 /* AIM */
 document.addEventListener("mousemove",e=>{
-    scope.style.left=e.clientX+"px";
-    scope.style.top=e.clientY+"px";
+scope.style.left=e.clientX+"px";
+scope.style.top=e.clientY+"px";
 });
 
 /* SHOOT */
 fireBtn.onclick=()=>{
-if(shot) return;
-shot=true;
 
-let t=target.getBoundingClientRect();
+/* flash */
+flash.style.opacity=0.8;
+setTimeout(()=>flash.style.opacity=0,100);
+
+/* bounding box hit detection */
+let m=monster.getBoundingClientRect();
 let s=scope.getBoundingClientRect();
 
 let sx=s.left+s.width/2;
 let sy=s.top+s.height/2;
 
-let tx=t.left+t.width/2;
-let ty=t.top+t.height/2;
-
-let dist=Math.sqrt((sx-tx)**2+(sy-ty)**2);
-
-if(dist<60){
-    showFinal();
+/* check if scope center is inside monster box */
+if(
+sx >= m.left &&
+sx <= m.right &&
+sy >= m.top &&
+sy <= m.bottom
+){
+showFinal();
 }else{
-    alert("Miss 😅");
-    location.reload();
+alert("Miss 😅 Try again");
+location.reload();
 }
+
 };
 
 /* FINAL */
 function showFinal(){
-    game.style.display="none";
-    fireBtn.style.display="none";
+game.style.opacity="0";
+fireBtn.style.display="none";
 
-    final.style.display="flex";
+setTimeout(()=>{
+game.style.display="none";
+final.style.display="flex";
 
-    setTimeout(()=>final.style.opacity=1,50);
+setTimeout(()=>final.style.opacity=1,50);
 
-    startSlider();
-    typeMessage();
+startSlider();
+typeMessage();
+},500);
 }
 
 /* SLIDER */
@@ -267,18 +212,18 @@ let caption=document.getElementById("caption");
 caption.innerText=captions[0];
 
 setInterval(()=>{
-index=(index+1)%captions.length;
+index=(index+1)%3;
 slider.style.transform=`translateX(-${index*100}%)`;
 caption.innerText=captions[index];
 },2500);
 }
 
-/* TYPEWRITER */
+/* TEXT */
 function typeMessage(){
-let text="You are not just my teammate… you are my best memory ❤️";
+let text="You always hit the target… just like you hit my life ❤️";
 let i=0;
 
-let msg=document.getElementById("message"); // ✅ FIX
+let msg=document.getElementById("message");
 msg.innerHTML="";
 
 let interval=setInterval(()=>{
