@@ -162,7 +162,9 @@ scroll-behavior:smooth;
 
     <div id="caption"></div>
   </div>
-
+<div style="margin-top:20px;font-size:14px;opacity:0.7;">
+⬇ Scroll to read message
+</div>
   <!-- 📜 MESSAGE SECTION -->
   <div id="messageSection">
     <p id="message"></p>
@@ -303,6 +305,11 @@ msg.innerHTML = "";  // reset
 
 let interval = setInterval(()=>{
 msg.innerHTML += text[i];
+
+i++;
+if(i >= text.length) clearInterval(interval);
+
+}, 40);
 
 /* ⭐ THIS IS THE CORRECT PLACE */
 
