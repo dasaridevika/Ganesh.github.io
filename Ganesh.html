@@ -192,20 +192,18 @@ scope.style.top = (e.clientY - 70) + "px";
 
 /* 📱 TOUCH AIM (FIXED) */
 game.addEventListener("touchmove", e => {
-e.preventDefault();
+  e.preventDefault();
 
-let t = e.touches[0];
-scope.style.left = (t.clientX - 70) + "px";
-scope.style.top = (t.clientY - 70) + "px";
-
-}, 
-
-game.addEventListener("touchstart", e => {
-let t = e.touches[0];
-scope.style.left = (t.clientX - 70) + "px";
-scope.style.top = (t.clientY - 70) + "px";
+  let t = e.touches[0];
+  scope.style.left = (t.clientX - 70) + "px";
+  scope.style.top = (t.clientY - 70) + "px";
 });
 
+game.addEventListener("touchstart", e => {
+  let t = e.touches[0];
+  scope.style.left = (t.clientX - 70) + "px";
+  scope.style.top = (t.clientY - 70) + "px";
+});
 /* 🔫 SHOOT */
 function shoot(){
 
